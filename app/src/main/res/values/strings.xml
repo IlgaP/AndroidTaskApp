@@ -3,4 +3,9 @@
     <string name="user_name">User name</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="date_time">Date Time</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
+    <string name="price">Price</string>
 </resources>

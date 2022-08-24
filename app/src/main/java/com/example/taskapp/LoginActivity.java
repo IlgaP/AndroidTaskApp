@@ -12,14 +12,13 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 
 
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    String apiUrl =  "https://engine.free.beeceptor.com/api/login";
+    String loginUrl =  "https://ilga3.free.beeceptor.com/api/login";
     MaterialButton btnLogin;
     EditText inputUsername;
     EditText  inputPassword;
@@ -37,13 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> {
             LoginTask loginTask = new LoginTask();
             loginTask.execute();
-
-
         });
     }
 
     private class LoginTask extends AsyncTask<String, Void, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -55,9 +51,9 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            String current = "";
+            String responseCode = "";
             try {
-                URL url = new URL(apiUrl);
+                URL url = new URL(loginUrl);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
@@ -65,31 +61,27 @@ public class LoginActivity extends AppCompatActivity {
                 connection.setRequestProperty("username", inputUsername.getText().toString());
                 connection.setRequestProperty("password", inputPassword.getText().toString());
                 connection.connect();
-
-//                StringBuilder inline = new StringBuilder();
-//                Scanner scanner = new Scanner(url.openStream());
-//                while (scanner.hasNext()) {
-//                    inline.append(scanner.nextLine());
-//                }
-//                scanner.close();
-                current = connection.getResponseMessage();
+                responseCode = String.valueOf(connection.getResponseCode());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return current;
+            return responseCode;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
             progressDialog.dismiss();
-
-            Toast.makeText(getApplicationContext(), "code: " + s, Toast.LENGTH_LONG).show();
-
-            openMainActivity();
+            if(s.equals("200") &&
+                    inputUsername.getText().toString().equals("test")&&
+                    inputPassword.getText().toString().equals("1234")){
+                Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+                openMainActivity();
+            } else {
+                Toast.makeText(getApplicationContext(), "Login not successful!", Toast.LENGTH_LONG).show();
+            }
         }
-
     }
+
     public void openMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
