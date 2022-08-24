@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String loginUrl =  "https://ilga3.free.beeceptor.com/api/login";
+    String loginUrl =  "https://engine.free.beeceptor.com/api/login";
     MaterialButton btnLogin;
     EditText inputUsername;
     EditText  inputPassword;
