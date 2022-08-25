@@ -42,7 +42,6 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             String responseText = "";
-
             try {
                 URL url = new URL(detailsUrl);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();

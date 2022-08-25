@@ -29,17 +29,14 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
         ImageView imageView;
         TextView textView;
 
         public ViewHolder(@NonNull View itemView){
-
             super(itemView);
             imageView = itemView.findViewById(R.id.imageview1);
             textView = itemView.findViewById(R.id.textview1);
             itemView.setOnClickListener(this);
-
         }
 
         @Override

@@ -60,11 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 URL url = new URL(mainUrl);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.connect();
-
                 responseText = getResponseText(connection);
-
-
-
                 connection.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
