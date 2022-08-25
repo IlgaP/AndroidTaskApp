@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder> {
 
-    private RecyclerViewClickListener listener;
+    private final RecyclerViewClickListener listener;
     Context context;
     ArrayList<String> nameList;
     ArrayList<String> idList;
@@ -28,11 +28,11 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView textView;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageview1);
             textView = itemView.findViewById(R.id.textview1);
@@ -64,7 +64,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return nameList.size();
     }
 
-    public interface RecyclerViewClickListener{
+    public interface RecyclerViewClickListener {
         void onClick(View view, int position);
     }
 }

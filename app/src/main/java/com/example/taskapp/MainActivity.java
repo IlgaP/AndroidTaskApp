@@ -1,6 +1,9 @@
 package com.example.taskapp;
 
-import androidx.annotation.NonNull;
+import static com.example.taskapp.LoginActivity.apiUrl;
+import static com.example.taskapp.Response.getResponseText;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,12 +16,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 
 
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerviewAdapter.RecyclerViewClickListener listener;
-
-    String mainUrl = "https://engine.free.beeceptor.com/api/getServices";
 
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> idList = new ArrayList<>();
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         MainTask mainTask = new MainTask();
         mainTask.execute();
 
-        recyclerView =findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -57,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String responseText = "";
             try {
-                URL url = new URL(mainUrl);
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                URL url = new URL(apiUrl + "getServices");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 responseText = getResponseText(connection);
                 connection.disconnect();
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             setOnClickListener();
             RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder> adapter = new RecyclerviewAdapter(MainActivity.this, nameList, idList, img, listener);
             recyclerView.setAdapter(adapter);
-                   }
+        }
     }
 
     private void jsonArrayToList(JSONArray jsonArray) throws JSONException {
@@ -101,21 +100,6 @@ public class MainActivity extends AppCompatActivity {
             String id = items.getString("id");
             idList.add(id);
         }
-    }
-
-    @NonNull
-    private String getResponseText(HttpURLConnection connection) throws IOException {
-        String responseText;
-        try(BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            responseText = response.toString();
-        }
-        return responseText;
     }
 
     private void setOnClickListener() {

@@ -18,10 +18,10 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String loginUrl =  "https://engine.free.beeceptor.com/api/login";
+    static final String apiUrl = "https://engine.free.beeceptor.com/api/";
     MaterialButton btnLogin;
     EditText inputUsername;
-    EditText  inputPassword;
+    EditText inputPassword;
     ProgressDialog progressDialog;
 
     @Override
@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String responseCode = "";
             try {
-                URL url = new URL(loginUrl);
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                URL url = new URL(apiUrl + "login");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -71,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            if(s.equals("200") &&
-                    inputUsername.getText().toString().equals("test")&&
-                    inputPassword.getText().toString().equals("1234")){
+            if (s.equals("200") &&
+                    inputUsername.getText().toString().equals("test") &&
+                    inputPassword.getText().toString().equals("1234")) {
                 Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
                 openMainActivity();
             } else {
